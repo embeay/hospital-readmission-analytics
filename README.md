@@ -44,15 +44,28 @@ Both models used consistent patient populations and data partitions.
 
 ## Key Findings
 
+The following results were independently reproduced using Python 3.12 and the software versions documented in `environment_verified.txt`.
+
 | Performance Metric | Logistic Regression | XGBoost |
 |---|---:|---:|
-| Area Under ROC Curve (AUC) | 0.661 | 0.664 |
-| Readmissions identified in highest-risk 20% | 666 | 675 |
-| Share of all readmissions identified | 38.0% | 38.5% |
+| Area Under ROC Curve (AUC) | 0.6608 | 0.6638 |
+| Precision-Recall AUC | 0.2287 | 0.2327 |
+| Readmissions identified in highest-risk 20% | 666 | 667 |
+| Share of all readmissions identified | 38.0% | 38.1% |
 
-**Primary finding:** Selecting the highest-risk 20% of encounters using XGBoost identified a group containing approximately 38.5% of observed readmissions, compared with 20% expected through random selection.
+**Primary finding:** Selecting the highest-risk 20% of encounters using XGBoost identified 667 of 1,752 observed readmissions (38.1%), compared with approximately 20% expected through random selection.
 
-XGBoost modestly outperformed logistic regression, although both models demonstrated useful risk stratification.
+Both models demonstrated useful risk stratification. XGBoost modestly outperformed logistic regression in overall discrimination.
+
+### Original HIMSS Research Results
+
+The original research environment produced slightly different XGBoost results:
+
+- ROC-AUC: 0.6643
+- Readmissions identified in highest-risk 20%: 675
+- Share of all readmissions identified: 38.5%
+
+The difference is associated with a change in the computational environment, although the precise cause has not been established. The GitHub reproducibility benchmarks use the independently verified local results above.
 
 ## Explainable AI
 
@@ -77,6 +90,68 @@ The project proposes a tiered care-management approach:
 An illustrative financial model evaluates review costs, hypothetical intervention effectiveness, and the potential financial value of avoided readmissions.
 
 Financial scenarios are not estimates of realized hospital savings.
+
+## Reproducing the Analysis
+
+The repository includes Python scripts for both predictive models, automated dataset retrieval, and a verification script.
+
+### Tested Environment
+
+- Python 3.12
+- NumPy 2.5.5
+- pandas 3.1.1
+- scikit-learn 1.9.1
+- XGBoost 3.4.1
+
+The complete tested dependency list is available in [environment_verified.txt](environment_verified.txt).
+
+### Setup and Execution
+
+Download the repository and open a terminal in its main directory.
+
+Create a Python 3.12 virtual environment:
+
+```cmd
+py -3.12 -m venv .venv
+.venv\Scripts\activate
+```
+
+Install the tested dependencies:
+
+```cmd
+python -m pip install -r environment_verified.txt
+```
+
+Download the original UCI dataset:
+
+```cmd
+python download_data.py
+```
+
+Train and evaluate both models:
+
+```cmd
+python src\model_logistic_v2.py
+python src\model_xgboost_v2.py
+```
+
+Verify the results:
+
+```cmd
+python verify_results.py
+```
+
+The verification script checks the test population, model performance, risk-decile capture, and XGBoost SHAP reconstruction.
+
+**Expected outcome:** `SUCCESS: Both models match the verified benchmarks.`
+
+### Reproducibility Notes
+
+- Both models use the same patient-grouped train, validation, and test partitions.
+- The original UCI dataset is downloaded separately rather than stored in this repository.
+- The verified environment was tested on Windows using Python 3.12.
+- Results may vary slightly under different library versions or operating systems.
+- The automated checks use a small numerical tolerance for ROC-AUC and PR-AUC but require exact matches for readmission counts.
 
 ## Technologies
 
@@ -104,4 +179,4 @@ UCI Machine Learning Repository. *Diabetes 130-US Hospitals for Years 1999–200
 
 ---
 
-**Project status:** Research models finalized; supporting code, analysis, and documentation being prepared for publication.
+**Project status:** Both predictive models independently reproduced and verified in the documented Python 3.12 environment. Research documentation and portfolio presentation are being finalized.
