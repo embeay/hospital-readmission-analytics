@@ -1,0 +1,103 @@
+{
+  "description": "XGBoost v2: three administrative ID fields nominal categorical, diagnoses categorical; all other features, split, hyperparameters unchanged",
+  "numeric_features": [
+    "time_in_hospital",
+    "num_lab_procedures",
+    "num_procedures",
+    "num_medications",
+    "number_outpatient",
+    "number_emergency",
+    "number_inpatient",
+    "number_diagnoses"
+  ],
+  "categorical_features": [
+    "race",
+    "gender",
+    "age",
+    "admission_type_id",
+    "discharge_disposition_id",
+    "admission_source_id",
+    "diag_1",
+    "diag_2",
+    "diag_3",
+    "max_glu_serum",
+    "A1Cresult",
+    "metformin",
+    "repaglinide",
+    "nateglinide",
+    "chlorpropamide",
+    "glimepiride",
+    "acetohexamide",
+    "glipizide",
+    "glyburide",
+    "tolbutamide",
+    "pioglitazone",
+    "rosiglitazone",
+    "acarbose",
+    "miglitol",
+    "troglitazone",
+    "tolazamide",
+    "examide",
+    "citoglipton",
+    "insulin",
+    "glyburide-metformin",
+    "glipizide-metformin",
+    "glimepiride-pioglitazone",
+    "metformin-rosiglitazone",
+    "metformin-pioglitazone",
+    "change",
+    "diabetesMed"
+  ],
+  "encoded_feature_count": 583,
+  "best_iteration": 179,
+  "validation": {
+    "n": 14966,
+    "events": 1731,
+    "roc_auc": 0.684916008596327,
+    "pr_auc": 0.2379289820863228,
+    "brier": 0.09697261452674866,
+    "log_loss": 0.33571976516731084,
+    "top_10pct_precision": 0.2792251169004676,
+    "top_10pct_recall": 0.2414789139225881,
+    "top_10pct_events": 418,
+    "top_20pct_precision": 0.24148296593186372,
+    "top_20pct_recall": 0.41767764298093585,
+    "top_20pct_events": 723
+  },
+  "test": {
+    "n": 14985,
+    "events": 1752,
+    "roc_auc": 0.6642741337468561,
+    "pr_auc": 0.2324621885594869,
+    "brier": 0.09838872402906418,
+    "log_loss": 0.34097027248968287,
+    "top_10pct_precision": 0.2835223482321548,
+    "top_10pct_recall": 0.2425799086757991,
+    "top_10pct_events": 425,
+    "top_20pct_precision": 0.22522522522522523,
+    "top_20pct_recall": 0.3852739726027397,
+    "top_20pct_events": 675
+  },
+  "v1_comparison": {
+    "validation": {
+      "roc_auc": 0.00348512655182065,
+      "pr_auc": 0.004473626826733579,
+      "brier": -0.00022814422845840454,
+      "top_10pct_precision": 0.0046760187040748025,
+      "top_10pct_recall": 0.004043905257076846
+    },
+    "test": {
+      "roc_auc": 0.002869365951386871,
+      "pr_auc": 0.0024442892001870498,
+      "brier": -0.00013900548219680786,
+      "top_10pct_precision": 0.008005336891260872,
+      "top_10pct_recall": 0.00684931506849315
+    }
+  },
+  "shap_checks": {
+    "matrix_sparse": true,
+    "max_abs_margin_reconstruction_error": 1.6689300537109375e-06,
+    "max_abs_probability_reconstruction_error": 2.2351741790771484e-07,
+    "n_checked": 1500
+  }
+}
